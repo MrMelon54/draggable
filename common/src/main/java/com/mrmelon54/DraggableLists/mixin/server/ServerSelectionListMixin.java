@@ -14,7 +14,6 @@ import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.ServerList;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -153,14 +152,14 @@ public abstract class ServerSelectionListMixin extends ObjectSelectionList<Serve
             if (y < z) {
                 if (draggable_lists$softScrollingTimer == 0) {
                     draggable_lists$softScrollingTimer = Util.getMillis();
-                    draggable_lists$softScrollingOrigin = getScrollAmount();
+                    draggable_lists$softScrollingOrigin = scrollAmount();
                 }
                 float f = (float) (Util.getMillis() - draggable_lists$softScrollingTimer) / 5f;
                 setScrollAmount(draggable_lists$softScrollingOrigin + f);
             } else if (y > z) {
                 if (draggable_lists$softScrollingTimer == 0) {
                     draggable_lists$softScrollingTimer = Util.getMillis();
-                    draggable_lists$softScrollingOrigin = getScrollAmount();
+                    draggable_lists$softScrollingOrigin = scrollAmount();
                 }
                 float f = (float) (Util.getMillis() - draggable_lists$softScrollingTimer) / 5f;
                 setScrollAmount(draggable_lists$softScrollingOrigin - f);
@@ -197,7 +196,7 @@ public abstract class ServerSelectionListMixin extends ObjectSelectionList<Serve
             int i = multiplayerScreenDuckProvider.draggable_lists$getIndexOfServerInfo(underlyingServerProvider.draggable_lists$getUnderlyingServer());
             if (i == -1) return false;
 
-            int m = Mth.floor(mouseY - (double) this.getY()) - this.headerHeight + (int) this.getScrollAmount() - 4;
+            int m = Mth.floor(mouseY - (double) this.getY()) - this.headerHeight + (int) this.scrollAmount() - 4;
             int n = m / this.itemHeight;
 
             if (n >= 0 && n < onlineServers.size()) {
